@@ -2,7 +2,7 @@
 
 디지털 회로와 SoC를 설계하고 검증한 코드, FPGA에서 실행한 임베디드 펌웨어, On-Device AI 프로젝트를 한 저장소에서 관리합니다.
 
-현재 저장소에는 MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템의 설계 코드와 UVM 검증 환경, 펌웨어를 정리했습니다.
+현재 저장소에는 MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템과 SPI 및 I2C 프로토콜 UVM 검증 프로젝트를 정리했습니다.
 
 ## 저장소 구성
 
@@ -13,6 +13,13 @@
 | [검증](verification/) | SystemVerilog/UVM Testbench, Scoreboard, Functional Coverage |
 | [임베디드](embedded/) | MicroBlaze C Firmware, HAL, Driver, Service, Application |
 | [On-Device AI](ondevice-ai/) | Jetson과 TensorRT 기반 프로젝트 |
+
+## 프로젝트
+
+| 프로젝트 | 핵심 내용 | 코드 위치 |
+| --- | --- | --- |
+| AXI4-Lite 다중 보드 센서 모니터링 SoC | Custom IP, MicroBlaze Firmware, AXI GPIO UVM 검증 | [프로젝트 설명](project-hub/axi-sensor-monitoring-soc.md) |
+| SPI 및 I2C 프로토콜 UVM 검증 | 직렬 통신 RTL, 양방향 Scoreboard, Functional Coverage | [프로젝트 설명](project-hub/spi-i2c-uvm.md) |
 
 ## AXI4-Lite 다중 보드 센서 모니터링 SoC
 
@@ -49,13 +56,24 @@ flowchart LR
 | Fail | 0 |
 | Functional Coverage | 100% |
 
+## SPI 및 I2C 프로토콜 UVM 검증
+
+SPI와 I2C 통신 RTL을 구현하고 프로토콜별 UVM 환경에서 송수신 데이터, 명령 조합, 경계값을 검증했습니다.
+
+- SPI 8 bit MSB First, Full-Duplex, Mode 0와 다중 슬레이브 선택
+- I2C 7 bit 주소, START, WRITE, READ, STOP, ACK/NACK 처리
+- SPI와 I2C Functional Coverage 각각 100%
+- Basys3 FPGA Logic Analyzer를 이용한 통신 신호 확인
+
+구현 범위와 검증 시나리오는 [SPI 및 I2C 프로젝트 설명](project-hub/spi-i2c-uvm.md)에서 확인할 수 있습니다.
+
 ## 사용 기술
 
 | 구분 | 기술 |
 | --- | --- |
 | Digital Design | Verilog, SystemVerilog, FSM, AXI4-Lite, UART, SPI, I2C |
 | FPGA | Basys3, Artix-7 XC7A35T, Vivado 2020.2, MicroBlaze |
-| Verification | UVM, Scoreboard, Functional Coverage |
+| Verification | UVM 1.2, VCS, Verdi, Scoreboard, Functional Coverage |
 | Embedded | C, Vitis 2020.2, MMIO, Interrupt |
 | On-Device AI | Jetson, Computer Vision, TensorRT |
 
