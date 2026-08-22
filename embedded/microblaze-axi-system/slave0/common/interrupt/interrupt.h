@@ -1,0 +1,40 @@
+#ifndef SRC_COMMON_INTERRUPT_INTERRUPT_H_
+#define SRC_COMMON_INTERRUPT_INTERRUPT_H_
+
+#include "xparameters.h"
+
+#if defined(XPAR_INTC_0_DEVICE_ID)
+#define SLAVE0_HAS_INTC 1
+#define INTC_DEV_ID XPAR_INTC_0_DEVICE_ID
+#elif defined(XPAR_INTC_SINGLE_DEVICE_ID)
+#define SLAVE0_HAS_INTC 1
+#define INTC_DEV_ID XPAR_INTC_SINGLE_DEVICE_ID
+#else
+#define SLAVE0_HAS_INTC 0
+#endif
+
+#if defined(XPAR_INTC_0_TIMER_0_VEC_ID)
+#define SLAVE0_HAS_TMR_IRQ 1
+#define TMR_VEC_ID XPAR_INTC_0_TIMER_0_VEC_ID
+#elif defined(XPAR_MICROBLAZE_0_AXI_INTC_TIMER_0_INTERRUPT_INTR)
+#define SLAVE0_HAS_TMR_IRQ 1
+#define TMR_VEC_ID XPAR_MICROBLAZE_0_AXI_INTC_TIMER_0_INTERRUPT_INTR
+#else
+#define SLAVE0_HAS_TMR_IRQ 0
+#endif
+
+#if defined(XPAR_INTC_0_UART_0_VEC_ID)
+#define SLAVE0_HAS_UART_IRQ 1
+#define UART_VEC_ID XPAR_INTC_0_UART_0_VEC_ID
+#elif defined(XPAR_MICROBLAZE_0_AXI_INTC_UART2_INTR_INTR)
+#define SLAVE0_HAS_UART_IRQ 1
+#define UART_VEC_ID XPAR_MICROBLAZE_0_AXI_INTC_UART2_INTR_INTR
+#else
+#define SLAVE0_HAS_UART_IRQ 0
+#endif
+
+void TMR_ISR(void *CallbackRef);
+void UART_ISR(void *CallbackRef);
+int SetupInterruptSystem(void);
+
+#endif 

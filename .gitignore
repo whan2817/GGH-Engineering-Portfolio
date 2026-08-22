@@ -1,0 +1,48 @@
+# Vivado 생성 파일
+*.jou
+*.log
+*.str
+*.xpr
+*.xsa
+*.bit
+*.bin
+*.mmi
+*.ltx
+*.pb
+*.sdb
+*.rlx
+.Xil/
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/sources_1/bd/*/ip/
+*.srcs/sources_1/bd/*/sim/
+*.srcs/sources_1/bd/*/synth/
+
+# Vitis 생성 파일
+.metadata/
+.analytics
+Debug/
+Release/
+tempdsa/
+export/
+*.o
+*.d
+*.elf
+
+# 시뮬레이터 생성 파일
+xsim.dir/
+work/
+transcript
+vsim.wlf
+*.vcd
+*.fsdb
+
+# 편집기와 운영체제 파일
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
