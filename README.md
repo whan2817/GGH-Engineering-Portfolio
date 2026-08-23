@@ -2,7 +2,7 @@
 
 디지털 회로와 SoC를 설계하고 검증한 코드, FPGA에서 실행한 임베디드 펌웨어, On-Device AI 프로젝트를 한 저장소에서 관리합니다.
 
-현재 저장소에는 MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템과 SPI 및 I2C 프로토콜 UVM 검증 프로젝트를 정리했습니다.
+현재 저장소에는 RV32I Single-Cycle CPU, MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템, SPI 및 I2C 프로토콜 UVM 검증 프로젝트를 정리했습니다.
 
 ## 저장소 구성
 
@@ -18,8 +18,20 @@
 
 | 프로젝트 | 핵심 내용 | 코드 위치 |
 | --- | --- | --- |
+| RV32I Single-Cycle CPU | RV32I 명령어 Decode, Datapath, Memory와 프로그램 실행 | [프로젝트 설명](project-hub/rv32i-single-cycle-cpu.md) |
 | AXI4-Lite 다중 보드 센서 모니터링 SoC | Custom IP, MicroBlaze Firmware, AXI GPIO UVM 검증 | [프로젝트 설명](project-hub/axi-sensor-monitoring-soc.md) |
 | SPI 및 I2C 프로토콜 UVM 검증 | 직렬 통신 RTL, 양방향 Scoreboard, Functional Coverage | [프로젝트 설명](project-hub/spi-i2c-uvm.md) |
+
+## RV32I Single-Cycle CPU
+
+RV32I 기본 정수 명령어를 실행하는 Control Unit과 Datapath를 설계하고 Instruction Memory, CPU Core, Data Memory를 하나의 시스템으로 연결했습니다.
+
+- R-Type, I-Type, Load, Store, Branch, Upper Immediate, Jump 명령어 구현
+- Byte 주소 기반 Load와 Store, signed 및 unsigned Branch 처리
+- Adder 프로그램 실행 결과 `sum = 55` 확인
+- Bubble Sort 실행 결과 `{1, 3, 5, 7, 9}` 정렬 확인
+
+아키텍처와 구현 명령어는 [RV32I Single-Cycle CPU 프로젝트 설명](project-hub/rv32i-single-cycle-cpu.md)에서 확인할 수 있습니다.
 
 ## AXI4-Lite 다중 보드 센서 모니터링 SoC
 
@@ -71,7 +83,7 @@ SPI와 I2C 통신 RTL을 구현하고 프로토콜별 UVM 환경에서 송수신
 
 | 구분 | 기술 |
 | --- | --- |
-| Digital Design | Verilog, SystemVerilog, FSM, AXI4-Lite, UART, SPI, I2C |
+| Digital Design | Verilog, SystemVerilog, RISC-V RV32I, Single-Cycle CPU, FSM, AXI4-Lite, UART, SPI, I2C |
 | FPGA | Basys3, Artix-7 XC7A35T, Vivado 2020.2, MicroBlaze |
 | Verification | UVM 1.2, VCS, Verdi, Scoreboard, Functional Coverage |
 | Embedded | C, Vitis 2020.2, MMIO, Interrupt |
@@ -79,7 +91,7 @@ SPI와 I2C 통신 RTL을 구현하고 프로토콜별 UVM 환경에서 송수신
 
 ## 코드 관리 기준
 
-- RTL과 Testbench는 `rtl`, `tb` 폴더로 구분합니다.
+- 설계 소스는 `rtl`, 제공되는 Testbench는 `tb` 폴더로 구분합니다.
 - Vivado, Vitis, Simulator가 생성하는 Cache와 Build 파일은 저장하지 않습니다.
 - 코드 로직과 기존 작성 스타일은 유지하고 필요한 부분에만 설명용 한국어 주석을 작성합니다.
 - 프로젝트를 추가할 때 시스템 설명 문서와 관련 코드 경로를 함께 연결합니다.
