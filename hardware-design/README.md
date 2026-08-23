@@ -5,6 +5,7 @@
 | 프로젝트 | 설계 범위 | 코드 |
 | --- | --- | --- |
 | RV32I Single-Cycle CPU | RV32I 명령어 Decode, Datapath, Memory, 프로그램 실행 | [소스 보기](rv32i-single-cycle-cpu/) |
+| UART-FIFO Sensor and Time Controller | UART 명령, FIFO, Stopwatch, Watch, HC-SR04, DHT11, FND 출력 | [소스 보기](uart-fifo-sensor-time-controller/) |
 | AXI Sensor Monitoring SoC | Sensor Interface, GPIO, I2C, SPI, Timer, UART2, MicroBlaze Integration | [소스 보기](axi-sensor-monitoring-soc/) |
 | SPI EEPROM Emulator | SPI Mode 0 Command 처리, 256 Byte Memory, Sequential Transfer | [소스 보기](spi-eeprom-emulator/) |
 

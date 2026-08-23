@@ -2,7 +2,7 @@
 
 디지털 회로와 SoC를 설계하고 검증한 코드, FPGA에서 실행한 임베디드 펌웨어, On-Device AI 프로젝트를 한 저장소에서 관리합니다.
 
-현재 저장소에는 RV32I Single-Cycle CPU, MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템, SPI 및 I2C 프로토콜 UVM 검증, UART/FIFO/ASCII Decoder SystemVerilog 검증 프로젝트를 정리했습니다.
+현재 저장소에는 RV32I Single-Cycle CPU, UART-FIFO 기반 FPGA 센서 및 시간 제어 시스템, MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템, SPI 및 I2C 프로토콜 UVM 검증, UART/FIFO/ASCII Decoder SystemVerilog 검증 프로젝트를 정리했습니다.
 
 ## 저장소 구성
 
@@ -19,6 +19,7 @@
 | 프로젝트 | 핵심 내용 | 코드 위치 |
 | --- | --- | --- |
 | RV32I Single-Cycle CPU | RV32I 명령어 Decode, Datapath, Memory와 프로그램 실행 | [프로젝트 설명](project-hub/rv32i-single-cycle-cpu.md) |
+| UART-FIFO 기반 FPGA 센서 및 시간 제어 시스템 | UART 명령, 시간 계측, 센서 통신, FND 및 UART 출력 | [프로젝트 설명](project-hub/uart-fifo-sensor-time-controller.md) |
 | AXI4-Lite 다중 보드 센서 모니터링 SoC | Custom IP, MicroBlaze Firmware, AXI GPIO UVM 검증 | [프로젝트 설명](project-hub/axi-sensor-monitoring-soc.md) |
 | SPI 및 I2C 프로토콜 UVM 검증 | 직렬 통신 RTL, 양방향 Scoreboard, Functional Coverage | [프로젝트 설명](project-hub/spi-i2c-uvm.md) |
 | UART, FIFO, ASCII Decoder SystemVerilog 검증 | 개별 모듈 검증, Loopback 및 명령 처리 통합 검증 | [프로젝트 설명](project-hub/uart-fifo-ascii-sv.md) |
@@ -33,6 +34,19 @@ RV32I 기본 정수 명령어를 실행하는 Control Unit과 Datapath를 설계
 - Bubble Sort 실행 결과 `{1, 3, 5, 7, 9}` 정렬 확인
 
 아키텍처와 구현 명령어는 [RV32I Single-Cycle CPU 프로젝트 설명](project-hub/rv32i-single-cycle-cpu.md)에서 확인할 수 있습니다.
+
+## UART-FIFO 기반 FPGA 센서 및 시간 제어 시스템
+
+UART 명령과 보드 버튼을 공통 제어 입력으로 사용해 Stopwatch, Watch, HC-SR04, DHT11 기능을 선택적으로 동작시키는 FPGA 시스템입니다.
+
+- UART RX, FIFO RX, ASCII Decoder를 이용한 문자 명령 처리
+- 하나의 Control Unit에서 네 가지 기능 모드와 세부 상태 관리
+- HC-SR04 Trigger 및 Echo 기반 거리 측정
+- DHT11 단일 DATA 선 기반 40 bit 온습도 데이터 수신
+- 시간 및 센서 데이터를 FND와 UART 터미널로 출력
+- 통합 Testbench에서 입력부터 출력까지 End-to-End 데이터 흐름 확인
+
+설계 구조와 모드별 동작은 [UART-FIFO 기반 FPGA 센서 및 시간 제어 시스템 프로젝트 설명](project-hub/uart-fifo-sensor-time-controller.md)에서 확인할 수 있습니다.
 
 ## AXI4-Lite 다중 보드 센서 모니터링 SoC
 
