@@ -2,7 +2,7 @@
 
 디지털 회로와 SoC를 설계하고 검증한 코드, FPGA에서 실행한 임베디드 펌웨어, On-Device AI 프로젝트를 한 저장소에서 관리합니다.
 
-현재 저장소에는 RV32I Single-Cycle CPU, MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템, SPI 및 I2C 프로토콜 UVM 검증 프로젝트를 정리했습니다.
+현재 저장소에는 RV32I Single-Cycle CPU, MicroBlaze 기반 AXI4-Lite 다중 보드 센서 모니터링 시스템, SPI 및 I2C 프로토콜 UVM 검증, UART/FIFO/ASCII Decoder SystemVerilog 검증 프로젝트를 정리했습니다.
 
 ## 저장소 구성
 
@@ -21,6 +21,7 @@
 | RV32I Single-Cycle CPU | RV32I 명령어 Decode, Datapath, Memory와 프로그램 실행 | [프로젝트 설명](project-hub/rv32i-single-cycle-cpu.md) |
 | AXI4-Lite 다중 보드 센서 모니터링 SoC | Custom IP, MicroBlaze Firmware, AXI GPIO UVM 검증 | [프로젝트 설명](project-hub/axi-sensor-monitoring-soc.md) |
 | SPI 및 I2C 프로토콜 UVM 검증 | 직렬 통신 RTL, 양방향 Scoreboard, Functional Coverage | [프로젝트 설명](project-hub/spi-i2c-uvm.md) |
+| UART, FIFO, ASCII Decoder SystemVerilog 검증 | 개별 모듈 검증, Loopback 및 명령 처리 통합 검증 | [프로젝트 설명](project-hub/uart-fifo-ascii-sv.md) |
 
 ## RV32I Single-Cycle CPU
 
@@ -79,13 +80,25 @@ SPI와 I2C 통신 RTL을 구현하고 프로토콜별 UVM 환경에서 송수신
 
 구현 범위와 검증 시나리오는 [SPI 및 I2C 프로젝트 설명](project-hub/spi-i2c-uvm.md)에서 확인할 수 있습니다.
 
+## UART, FIFO, ASCII Decoder SystemVerilog 검증
+
+UART RX/TX, FIFO, ASCII Decoder를 개별 검증한 뒤 UART Loopback과 ASCII 명령 처리 통합 경로까지 확장했습니다.
+
+- SystemVerilog class 기반 Transaction, Generator, Driver, Monitor, Scoreboard 구성
+- UART Frame 송수신과 8 bit 데이터 복원 비교
+- Queue 참조 모델을 이용한 FIFO 데이터 순서 검증
+- ASCII 명령의 6 bit one-hot 제어 신호 변환 검증
+- 두 통합 경로의 최종 출력 Scoreboard 비교 통과
+
+검증 구조와 Source Set 구성은 [UART, FIFO, ASCII Decoder 프로젝트 설명](project-hub/uart-fifo-ascii-sv.md)에서 확인할 수 있습니다.
+
 ## 사용 기술
 
 | 구분 | 기술 |
 | --- | --- |
 | Digital Design | Verilog, SystemVerilog, RISC-V RV32I, Single-Cycle CPU, FSM, AXI4-Lite, UART, SPI, I2C |
 | FPGA | Basys3, Artix-7 XC7A35T, Vivado 2020.2, MicroBlaze |
-| Verification | UVM 1.2, VCS, Verdi, Scoreboard, Functional Coverage |
+| Verification | UVM 1.2, SystemVerilog class, VCS, Verdi, Vivado Simulator, Scoreboard, Functional Coverage |
 | Embedded | C, Vitis 2020.2, MMIO, Interrupt |
 | On-Device AI | Jetson, Computer Vision, TensorRT |
 
@@ -95,3 +108,4 @@ SPI와 I2C 통신 RTL을 구현하고 프로토콜별 UVM 환경에서 송수신
 - Vivado, Vitis, Simulator가 생성하는 Cache와 Build 파일은 저장하지 않습니다.
 - 코드 로직과 기존 작성 스타일은 유지하고 필요한 부분에만 설명용 한국어 주석을 작성합니다.
 - 프로젝트를 추가할 때 시스템 설명 문서와 관련 코드 경로를 함께 연결합니다.
+
